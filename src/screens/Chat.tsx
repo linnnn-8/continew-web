@@ -1,9 +1,76 @@
-// SCR-07 대화 공간 · 메시지 목록, 작성자 선택(기본 비움), 답장, 검색, 게시판에 올리기 (F-04/05)
+import { Send } from 'lucide-react'
+import { useState, type FormEvent } from 'react'
+import { visibleSpaces } from '../state/selectors'
+import { useStore } from '../state/store'
+import { ANONYMOUS_LABEL } from '../types/model'
+
+const time = (value: string) =>
+  new Intl.DateTimeFormat('ko-KR', { hour: 'numeric', minute: '2-digit' }).format(new Date(value))
+
+/** 작성자 표기를 직접 고른 뒤 공용 대화에 메시지를 남긴다. */
 export default function ChatScreen() {
+  const { state, dispatch } = useStore()
+  const [authorLabel, setAuthorLabel] = useState('')
+  const [body, setBody] = useState('')
+  const messages = state.messages.filter((message) => !message.deletedAt)
+
+  function send(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!authorLabel || !body.trim()) return
+    dispatch({ type: 'SEND_MESSAGE', authorLabel, body: body.trim() })
+    setBody('')
+  }
+
   return (
-    <section>
-      <h2>SCR-07 대화 공간</h2>
-      <p>TODO: 메시지 목록, 작성자 선택(기본 비움), 답장, 검색, 게시판에 올리기 (F-04/05)</p>
-    </section>
+    <div className="page page-chat">
+      <div className="chat-head">
+        <h1>대화</h1>
+        <p className="sub">공간을 넘어 자유롭게 이야기해요.</p>
+      </div>
+
+      <ul className="chat-list" aria-label="공용 대화">
+        {messages.map((message) => (
+          <li className="chat-message" key={message.id}>
+            <span className="chat-avatar" aria-hidden>
+              {message.authorLabel.slice(0, 1)}
+            </span>
+            <div className="chat-content">
+              <div className="chat-meta">
+                <strong>{message.authorLabel}</strong>
+                <time dateTime={message.createdAt}>{time(message.createdAt)}</time>
+              </div>
+              <p className="chat-bubble">{message.body}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <form className="chat-compose" onSubmit={send}>
+        <label className="chat-author-label" htmlFor="chat-author">
+          작성자 표기
+        </label>
+        <select id="chat-author" value={authorLabel} onChange={(event) => setAuthorLabel(event.target.value)}>
+          <option value="">직접 선택해 주세요</option>
+          {visibleSpaces(state).map((space) => (
+            <option key={space.id} value={space.name}>
+              {space.name}
+            </option>
+          ))}
+          <option value={ANONYMOUS_LABEL}>{ANONYMOUS_LABEL}</option>
+        </select>
+        <div className="chat-input-row">
+          <input
+            aria-label="메시지"
+            placeholder="메시지를 입력하세요..."
+            value={body}
+            onChange={(event) => setBody(event.target.value)}
+            maxLength={5000}
+          />
+          <button type="submit" aria-label="메시지 보내기" disabled={!authorLabel || !body.trim()}>
+            <Send size={18} aria-hidden />
+          </button>
+        </div>
+      </form>
+    </div>
   )
 }

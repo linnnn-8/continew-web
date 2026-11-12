@@ -91,7 +91,8 @@ AI 요약 설정이 꺼져 있으면 `useSummary().run`은 아무것도 하지 �
 | SCR-02 공간 선택 (`screens/SpaceSelect.tsx`)                      | 구현                                              |
 | SCR-03 개인 공간 홈 (`screens/SpaceHome.tsx`, `components/home/`) | 구현. 홈 구성 편집(켜기·끄기·순서) 포함           |
 | SCR-06 공용 영역 (`screens/Board.tsx`, `components/board/`)       | 구현. 필터, 확인했어요, AI 요약 버튼(켜진 경우만) |
-| 그 외 (SCR-01·04·05·07·08·09, 공간 관리)                          | 자리만 있음 (TODO 화면)                           |
+| SCR-07 대화 (`screens/Chat.tsx`)                                | 메시지 목록·작성자 직접 선택·전송 구현. 답장·검색·게시판 공유는 미구현 |
+| 그 외 (SCR-01·04·05·08·09, 공간 관리)                           | 자리만 있음 (TODO 화면)                           |
 
 개발 중에는 공용 영역 맨 아래 "개발용" 박스로 AI 요약 켜짐/꺼짐을 바꿀 수 있습니다(설정 화면의 동의 절차가 생기면 삭제).
 폰트는 Pretendard(`pretendard` 패키지), 아이콘은 `lucide-react`입니다.
