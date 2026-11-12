@@ -28,7 +28,7 @@ export default function SpaceSelect() {
       <div className="hero">
         <div>
           <h1>{COPY.spaceSelectTitle}</h1>
-          <p className="sub">일상과 생각을 공간별로 나눠 기록해요.</p>
+          <p className="sub">일상과 생각을 공간별로 기록해요.</p>
         </div>
         <Cloud size={140} />
       </div>
