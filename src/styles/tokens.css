@@ -1,0 +1,133 @@
+/* contiNEW 디자인 토큰 · 메인=파스텔 라벤더, 서브=연베이지, 배경=화이트
+   규칙: 라벤더 = 앱의 주 색·개인 기록 / 베이지 = 공유 기록 / 공간 색(--c)은 그 공간의 아이콘·칩에만 쓴다 */
+:root {
+  --font:
+    'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Noto Sans KR',
+    sans-serif;
+
+  --primary: #7c5ce0;
+  --primary-strong: #6a49d6;
+  --primary-soft: #f1edff;
+  --primary-softer: #f8f6ff;
+  --primary-line: #e4dcfb;
+
+  --sand: #f9f2e5;
+  --sand-strong: #f0e3c9;
+  --sand-text: #86672c;
+
+  --bg: #ffffff;
+  --text: #1f1b2e;
+  --text-sub: #6f6b82;
+  --text-mute: #9b97ad;
+  --line: #eeeaf6;
+
+  --c: #8b6fe8; /* 지금 보는 공간 색. 공간 화면에서 덮어쓴다 */
+
+  --radius-lg: 22px;
+  --radius-md: 16px;
+  --radius-sm: 12px;
+  --shadow-card: 0 4px 18px rgba(110, 84, 200, 0.07);
+  --shadow-pop: 0 10px 28px rgba(110, 84, 200, 0.28);
+
+  --fs: 16px; /* 글자 크기 4단계 (F-01-3) */
+  font-family: var(--font);
+}
+[data-font='1'] {
+  --fs: 14px;
+}
+[data-font='3'] {
+  --fs: 18px;
+}
+[data-font='4'] {
+  --fs: 20px;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-size: var(--fs);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+}
+h1,
+h2,
+h3,
+p,
+ul {
+  margin: 0;
+  padding: 0;
+}
+ul {
+  list-style: none;
+}
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--primary-line);
+  outline-offset: 2px;
+  border-radius: 10px;
+}
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+/* 폰 프레임: 모바일은 꽉 차게, 데스크톱은 390×844 */
+.frame {
+  position: relative;
+  width: 100%;
+  max-width: 390px;
+  height: 100dvh;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background: var(--bg);
+  overflow: hidden;
+}
+@media (min-width: 481px) {
+  body {
+    background: #ece8f7;
+  }
+  .frame {
+    height: 844px;
+    max-height: calc(100dvh - 32px);
+    margin: 16px auto;
+    border-radius: 44px;
+    box-shadow: 0 24px 70px rgba(80, 60, 160, 0.2);
+  }
+}
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 20px 28px;
+  scrollbar-width: none;
+}
+.scroll::-webkit-scrollbar {
+  display: none;
+}
+.page {
+  padding-bottom: 8px;
+}
+.page > * + * {
+  margin-top: 14px;
+}
