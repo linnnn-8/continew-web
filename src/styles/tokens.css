@@ -118,7 +118,7 @@ input:focus-visible {
 .scroll {
   flex: 1;
   overflow-y: auto;
-  padding: 0 20px 28px;
+  padding: 0 28px 28px;
   scrollbar-width: none;
 }
 .scroll::-webkit-scrollbar {

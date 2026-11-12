@@ -29,6 +29,7 @@ export interface PostDraft {
 }
 
 export type Action =
+  | { type: 'RESTORE_BACKUP'; state: AppState }
   | { type: 'OPEN_SPACE'; id: string }
   | { type: 'CLOSE_SPACE' }
   | { type: 'ADD_SPACE'; name: string; color: string; icon?: string; description?: string }
@@ -46,6 +47,8 @@ export type Action =
 
 export function reducer(s: AppState, a: Action): AppState {
   switch (a.type) {
+    case 'RESTORE_BACKUP':
+      return { ...a.state, currentSpaceId: null }
     case 'OPEN_SPACE':
       return s.spaces.some((x) => x.id === a.id) ? { ...s, currentSpaceId: a.id } : s
     case 'CLOSE_SPACE':
