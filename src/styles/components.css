@@ -105,6 +105,9 @@
   font-size: 24px;
   max-width: 220px;
 }
+.page-select .cloud {
+  margin-right: -14px;
+}
 
 /* ── 버튼 ───────────────────────────────────── */
 .btn {
@@ -261,6 +264,9 @@
   margin-top: 2px;
   color: var(--primary);
 }
+.space-notice {
+  font-size: 12px;
+}
 .chip-icon {
   display: inline-grid;
   place-items: center;
@@ -298,10 +304,6 @@
 }
 .space-card:active {
   transform: scale(0.99);
-}
-.space-list > li:first-child .space-card {
-  border-radius: var(--radius-lg);
-  background: var(--primary-softer);
 }
 .space-card > svg {
   margin-left: auto;

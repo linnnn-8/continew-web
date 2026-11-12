@@ -30,7 +30,7 @@ export default function SpaceSelect() {
           <h1>{COPY.spaceSelectTitle}</h1>
           <p className="sub">일상과 생각을 공간별로 나눠 기록해요.</p>
         </div>
-        <Cloud />
+        <Cloud size={140} />
       </div>
 
       <div className="list-head">
@@ -69,7 +69,7 @@ export default function SpaceSelect() {
         <Plus size={18} aria-hidden />새 공간 만들기
       </button>
 
-      <p className="notice notice-info">
+      <p className="notice notice-info space-notice">
         <Info size={15} aria-hidden />
         <span>{COPY.spaceNotice}</span>
       </p>

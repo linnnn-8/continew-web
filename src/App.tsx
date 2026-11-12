@@ -1,6 +1,6 @@
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
 import { FrameLayout, TabLayout } from './components/layouts'
-import { StoreProvider, useStore } from './state/store'
+import { StoreProvider } from './state/store'
 import { LockProvider, useLock } from './security/LockProvider'
 import Board from './screens/Board'
 import Chat from './screens/Chat'
@@ -13,10 +13,9 @@ import SpaceManage from './screens/SpaceManage'
 import SpaceSelect from './screens/SpaceSelect'
 import SummaryResult from './screens/SummaryResult'
 
-/** 앱을 열면 공간 선택으로. 공간이 하나뿐이면 바로 연다 (store가 그 경우에만 공간을 열어 둔다) */
+/** 앱을 열면 항상 공간 선택 화면에서 시작한다. */
 function Entry() {
-  const { currentSpace } = useStore()
-  return <Navigate to={currentSpace ? '/home' : '/spaces'} replace />
+  return <Navigate to="/spaces" replace />
 }
 
 function AppRoutes() {

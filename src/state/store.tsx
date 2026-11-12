@@ -14,10 +14,9 @@ import { reducer, type Action, type AppState } from './reducer'
 // 연동 전: 브라우저 localStorage에 저장한다. 서버 연동 시 이 파일만 바꾸면 된다.
 const KEY = 'continew:v2'
 
-/** 앱을 열 때 마지막 공간을 자동으로 열지 않는다. 공간이 하나뿐일 때만 바로 연다 (F-01, 원칙2) */
+/** 앱을 열 때 공간을 자동으로 선택하지 않는다. */
 function entry(s: AppState): AppState {
-  const visible = s.spaces.filter((x) => !x.hidden && !x.deletedAt)
-  return { ...s, currentSpaceId: visible.length === 1 ? visible[0].id : null }
+  return { ...s, currentSpaceId: null }
 }
 
 function load(): AppState {
