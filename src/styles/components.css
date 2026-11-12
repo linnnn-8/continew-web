@@ -1021,3 +1021,20 @@
 .scroll > section {
   padding-top: 16px;
 }
+
+/* 메모·공간·공유 입력 화면 */
+.editor-page { padding-top: 20px; }
+.editor-page h1 { margin-top: 24px; font-size: 23px; letter-spacing: -0.03em; }
+.editor-page .badge { margin-top: 8px; }
+.form-label { display: block; margin: 22px 0 7px; font-size: 14px; font-weight: 700; }
+.form-label small { color: var(--text-mute); font-weight: 500; }
+.form-input { display: block; width: 100%; min-height: 46px; padding: 11px 13px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: #fff; color: var(--text); font: inherit; }
+.memo-input { min-height: 230px; resize: vertical; line-height: 1.6; }
+.form-error { margin-top: 6px; color: #bf3155; font-size: 13px; }
+.editor-page > .btn { margin-top: 20px; }
+.editor-delete { display: flex; align-items: center; gap: 6px; margin: 18px auto; color: var(--text-sub); font-size: 13px; }
+.choice-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 9px; }
+.choice-icon, .choice-color { display: grid; place-items: center; height: 44px; border-radius: 12px; border: 2px solid transparent; background: #f7f7f9; color: var(--text-sub); }
+.choice-icon.selected, .choice-color.selected { border-color: var(--text); outline: 2px solid #fff; outline-offset: -4px; }
+.share-consent { display: flex; align-items: flex-start; gap: 9px; margin-top: 24px; font-size: 13px; line-height: 1.5; }
+.share-consent input { margin-top: 3px; accent-color: var(--primary); }
