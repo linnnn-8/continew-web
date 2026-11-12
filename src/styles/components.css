@@ -3,10 +3,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: calc(env(safe-area-inset-top, 0px) + 14px) 20px 6px;
+  padding: calc(env(safe-area-inset-top, 0px) + 28px) 24px 18px;
 }
 .select-top {
-  padding-top: calc(env(safe-area-inset-top, 0px) + 20px);
+  padding-top: calc(env(safe-area-inset-top, 0px) + 34px);
 }
 .logo {
   display: inline-flex;
@@ -17,13 +17,13 @@
   line-height: 1;
 }
 .logo-conti {
-  color: #8d86ad;
+  color: #6c6e76;
 }
 .logo-new {
   color: var(--primary);
 }
 .logo-spark {
-  color: #a58cf0;
+  color: var(--primary);
   margin: -4px 0 0 1px;
 }
 
@@ -46,7 +46,7 @@
 
 .tabbar {
   display: flex;
-  padding: 8px 8px calc(env(safe-area-inset-bottom, 0px) + 10px);
+  padding: 10px 8px calc(env(safe-area-inset-bottom, 0px) + 12px);
   background: #fff;
   border-top: 1px solid var(--line);
 }
@@ -73,12 +73,11 @@
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  margin: 8px -20px 0;
-  padding: 14px 20px 18px;
-  background: radial-gradient(ellipse 70% 50% at 85% 50%, #f1ecff 0, rgba(255, 255, 255, 0) 100%);
+  margin: 12px -20px 0;
+  padding: 20px 20px 24px;
 }
 .hero h1 {
-  font-size: 24px;
+  font-size: 23px;
   line-height: 1.3;
   letter-spacing: -0.03em;
   font-weight: 800;
@@ -100,10 +99,11 @@
 }
 .cloud {
   flex: none;
-  filter: drop-shadow(0 8px 12px rgba(124, 92, 224, 0.18));
+  opacity: 0.9;
 }
 .page-select .hero h1 {
-  font-size: 26px;
+  font-size: 24px;
+  max-width: 220px;
 }
 
 /* ── 버튼 ───────────────────────────────────── */
@@ -176,9 +176,9 @@
 /* ── 카드·칩·배지 ───────────────────────────────── */
 .card {
   background: #fff;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: 16px;
+  border: 0;
+  border-radius: 0;
+  padding: 12px 0;
   box-shadow: var(--shadow-card);
 }
 .sec-head {
@@ -246,7 +246,7 @@
 .notice {
   padding: 12px 14px;
   border-radius: var(--radius-md);
-  background: var(--primary-softer);
+  background: #f8f8fa;
   color: var(--text-sub);
   font-size: 13px;
   line-height: 1.5;
@@ -268,8 +268,8 @@
   width: 44px;
   height: 44px;
   border-radius: 14px;
-  background: color-mix(in srgb, var(--c) 16%, white);
-  color: color-mix(in srgb, var(--c) 82%, black);
+  background: #f7f7f9;
+  color: #737780;
 }
 
 /* ── ② 공간 선택 ───────────────────────────────── */
@@ -283,20 +283,25 @@
   margin-top: 4px;
 }
 .space-list > li + li {
-  margin-top: 10px;
+  margin-top: 0;
+  border-top: 1px solid var(--line);
 }
 .space-card {
   width: 100%;
   display: flex;
   align-items: center;
   gap: 14px;
-  padding: 14px 16px;
-  border-radius: var(--radius-lg);
-  background: color-mix(in srgb, var(--c) 9%, white);
+  padding: 15px 12px;
+  border-radius: 0;
+  background: #fff;
   color: var(--text);
 }
 .space-card:active {
   transform: scale(0.99);
+}
+.space-list > li:first-child .space-card {
+  border-radius: var(--radius-lg);
+  background: var(--primary-softer);
 }
 .space-card > svg {
   margin-left: auto;
@@ -325,7 +330,7 @@
   gap: 6px;
   padding: 14px;
   border-radius: var(--radius-lg);
-  border: 1px dashed var(--primary-line);
+  border: 1px solid var(--line);
   color: var(--text);
   font-weight: 700;
   background: #fff;
@@ -374,19 +379,19 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  padding: 16px 4px 12px;
+  padding: 18px 4px 14px;
   border-radius: var(--radius-md);
   font-size: 13.5px;
   font-weight: 700;
   text-align: center;
 }
 .sc-personal {
-  background: var(--primary-soft);
-  color: var(--primary-strong);
+  background: #f7f7f9;
+  color: var(--text);
 }
 .sc-shared {
-  background: var(--sand);
-  color: var(--sand-text);
+  background: #f7f7f9;
+  color: var(--text);
 }
 .sc em {
   position: absolute;
@@ -434,8 +439,7 @@
   flex: none;
 }
 .sec-personal {
-  border-color: var(--primary-line);
-  background: var(--primary-softer);
+  border-top: 1px solid var(--line);
 }
 
 .todo-list > li {
@@ -498,8 +502,8 @@
   width: 52px;
   padding: 6px 0;
   border-radius: 14px;
-  background: var(--sand);
-  color: var(--sand-text);
+  background: var(--primary-soft);
+  color: var(--text);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -545,7 +549,8 @@
   flex: 1;
   height: 38px;
   border-radius: 999px;
-  background: var(--primary-softer);
+  background: #fff;
+  border: 1px solid var(--line);
   color: var(--text-sub);
   text-align: center;
   font-weight: 700;
@@ -554,7 +559,7 @@
 .chip.on {
   background: var(--primary);
   color: #fff;
-  box-shadow: 0 4px 12px rgba(124, 92, 224, 0.3);
+  border-color: var(--primary);
 }
 .ai-banner {
   width: 100%;
@@ -657,9 +662,7 @@
   font-size: 12.5px;
 }
 .sec-caution {
-  background: var(--sand);
-  border-color: var(--sand-strong);
-  box-shadow: none;
+  border-top: 1px solid var(--line);
 }
 .sec-caution .post-detail {
   background: #fff;
@@ -892,6 +895,126 @@
 .move button:disabled {
   opacity: 0.35;
   cursor: default;
+}
+
+/* ── 공용 대화 ────────────────────────────────── */
+.page-chat {
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.chat-head {
+  padding: 22px 0 12px;
+}
+.chat-head h1 {
+  font-size: 23px;
+  letter-spacing: -0.03em;
+}
+.chat-list {
+  flex: 1;
+  padding: 18px 0 28px;
+}
+.chat-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 19px;
+}
+.chat-avatar {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: #f4f4f6;
+  color: var(--text-sub);
+  font-size: 15px;
+  font-weight: 700;
+}
+.chat-content {
+  min-width: 0;
+  max-width: calc(100% - 54px);
+}
+.chat-meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin: 2px 0 6px;
+}
+.chat-meta strong {
+  font-size: 14px;
+}
+.chat-meta time {
+  color: var(--text-sub);
+  font-size: 12px;
+}
+.chat-bubble {
+  display: inline-block;
+  max-width: 100%;
+  padding: 11px 14px;
+  border-radius: 18px;
+  background: #f6f6f8;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.chat-message:nth-child(even) .chat-bubble {
+  background: var(--primary-soft);
+}
+.chat-compose {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  padding: 12px 0 16px;
+  background: #fff;
+  border-top: 1px solid var(--line);
+}
+.chat-author-label {
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text-sub);
+  font-size: 12px;
+  font-weight: 600;
+}
+.chat-compose select {
+  width: 100%;
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #fff;
+  font: inherit;
+  font-size: 13px;
+}
+.chat-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.chat-input-row input {
+  flex: 1;
+  min-width: 0;
+  height: 42px;
+  padding: 0 13px;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  font: inherit;
+  font-size: 14px;
+}
+.chat-input-row button {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: var(--primary);
+  color: white;
+}
+.chat-input-row button:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
 }
 
 /* 아직 안 만든 화면의 자리 */

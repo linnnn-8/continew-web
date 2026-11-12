@@ -28,7 +28,7 @@ export default function SpaceSelect() {
       <div className="hero">
         <div>
           <h1>{COPY.spaceSelectTitle}</h1>
-          <p className="sub">공간마다 기록과 화면이 따로 있어요.</p>
+          <p className="sub">일상과 생각을 공간별로 나눠 기록해요.</p>
         </div>
         <Cloud />
       </div>
@@ -76,7 +76,7 @@ export default function SpaceSelect() {
 
       <button className="btn btn-soft wide" onClick={() => nav('/board')}>
         <Users size={18} aria-hidden />
-        공용 공간으로 가기
+        공용 게시판으로 가기
       </button>
     </main>
   )

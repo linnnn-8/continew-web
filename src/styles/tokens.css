@@ -1,33 +1,32 @@
-/* contiNEW 디자인 토큰 · 메인=파스텔 라벤더, 서브=연베이지, 배경=화이트
-   규칙: 라벤더 = 앱의 주 색·개인 기록 / 베이지 = 공유 기록 / 공간 색(--c)은 그 공간의 아이콘·칩에만 쓴다 */
+/* contiNEW 디자인 토큰 · 흰 배경과 분홍색 강조 */
 :root {
   --font:
     'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Noto Sans KR',
     sans-serif;
 
-  --primary: #7c5ce0;
-  --primary-strong: #6a49d6;
-  --primary-soft: #f1edff;
-  --primary-softer: #f8f6ff;
-  --primary-line: #e4dcfb;
+  --primary: #ee477f;
+  --primary-strong: #c7225e;
+  --primary-soft: #fceaf1;
+  --primary-softer: #fff5f8;
+  --primary-line: #f8cada;
 
-  --sand: #f9f2e5;
-  --sand-strong: #f0e3c9;
-  --sand-text: #86672c;
+  --sand: #f8f8fa;
+  --sand-strong: #ededf1;
+  --sand-text: #555964;
 
   --bg: #ffffff;
-  --text: #1f1b2e;
-  --text-sub: #6f6b82;
-  --text-mute: #9b97ad;
-  --line: #eeeaf6;
+  --text: #1d1d21;
+  --text-sub: #626779;
+  --text-mute: #8c909b;
+  --line: #eaebef;
 
   --c: #8b6fe8; /* 지금 보는 공간 색. 공간 화면에서 덮어쓴다 */
 
   --radius-lg: 22px;
   --radius-md: 16px;
   --radius-sm: 12px;
-  --shadow-card: 0 4px 18px rgba(110, 84, 200, 0.07);
-  --shadow-pop: 0 10px 28px rgba(110, 84, 200, 0.28);
+  --shadow-card: none;
+  --shadow-pop: 0 8px 20px rgba(238, 71, 127, 0.22);
 
   --fs: 16px; /* 글자 크기 4단계 (F-01-3) */
   font-family: var(--font);
@@ -106,14 +105,14 @@ input:focus-visible {
 }
 @media (min-width: 481px) {
   body {
-    background: #ece8f7;
+    background: #f3f3f5;
   }
   .frame {
     height: 844px;
     max-height: calc(100dvh - 32px);
     margin: 16px auto;
     border-radius: 44px;
-    box-shadow: 0 24px 70px rgba(80, 60, 160, 0.2);
+    box-shadow: 0 24px 70px rgba(30, 30, 40, 0.1);
   }
 }
 .scroll {

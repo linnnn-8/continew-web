@@ -75,8 +75,8 @@ export default function Board() {
       <div className="hero">
         <div>
           <ScopeBadge scope="shared" />
-          <h1>함께 쓰는 공간이에요</h1>
-          <p className="sub">모든 공간의 중요한 일정과 이야기를 확인하고 남겨요.</p>
+          <h1>게시판</h1>
+          <p className="sub">모든 공간과 함께 보는 공용 기록이에요.</p>
           {aiOn && (
             <span className="ai-chip">
               <Sparkles size={12} aria-hidden />

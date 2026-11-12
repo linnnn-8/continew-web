@@ -1,4 +1,4 @@
-import { Home, MessageCircle, Settings, Users } from 'lucide-react'
+import { Home, MessageCircle, PanelsTopLeft, Settings } from 'lucide-react'
 import { NavLink, Outlet } from 'react-router-dom'
 import Logo from './Logo'
 import SpacePill from './SpacePill'
@@ -14,7 +14,7 @@ export function FrameLayout() {
 
 const TABS = [
   { to: '/home', label: '내 공간', Icon: Home },
-  { to: '/board', label: '공용', Icon: Users },
+  { to: '/board', label: '게시판', Icon: PanelsTopLeft },
   { to: '/chat', label: '대화', Icon: MessageCircle },
   { to: '/settings', label: '설정', Icon: Settings },
 ]
