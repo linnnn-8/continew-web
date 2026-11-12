@@ -47,38 +47,73 @@ const isList = (value: unknown, check: (item: unknown) => boolean): value is unk
   Array.isArray(value) && value.every(check)
 
 function isSpace(value: unknown) {
-  return isRecord(value) &&
-    isText(value.id) && isText(value.name) && isText(value.color) &&
-    typeof value.sortOrder === 'number' && typeof value.hidden === 'boolean' &&
-    typeof value.aiMemoEnabled === 'boolean' && isNullableText(value.deletedAt) &&
-    isList(value.homeWidgets, (widget) => isRecord(widget) && isText(widget.id) && typeof widget.visible === 'boolean')
+  return (
+    isRecord(value) &&
+    isText(value.id) &&
+    isText(value.name) &&
+    isText(value.color) &&
+    typeof value.sortOrder === 'number' &&
+    typeof value.hidden === 'boolean' &&
+    typeof value.aiMemoEnabled === 'boolean' &&
+    isNullableText(value.deletedAt) &&
+    isList(
+      value.homeWidgets,
+      (widget) => isRecord(widget) && isText(widget.id) && typeof widget.visible === 'boolean',
+    )
+  )
 }
 
 function isMemo(value: unknown) {
-  return isRecord(value) &&
-    isText(value.id) && isText(value.spaceId) && isText(value.body) &&
-    typeof value.pinned === 'boolean' && isList(value.sharedPostIds, isText) &&
-    isText(value.createdAt) && isText(value.updatedAt) && isNullableText(value.deletedAt)
+  return (
+    isRecord(value) &&
+    isText(value.id) &&
+    isText(value.spaceId) &&
+    isText(value.body) &&
+    typeof value.pinned === 'boolean' &&
+    isList(value.sharedPostIds, isText) &&
+    isText(value.createdAt) &&
+    isText(value.updatedAt) &&
+    isNullableText(value.deletedAt)
+  )
 }
 
 function isPost(value: unknown) {
-  return isRecord(value) &&
-    isText(value.id) && ['event', 'todo', 'caution', 'note'].includes(String(value.type)) &&
-    isText(value.title) && isText(value.body) && isText(value.authorLabel) &&
-    isText(value.createdAt) && isText(value.updatedAt) && isNullableText(value.deletedAt) &&
-    typeof value.pinned === 'boolean' && typeof value.confirmRequested === 'boolean' &&
-    isOptionalText(value.eventAt) && isOptionalText(value.dueAt)
+  return (
+    isRecord(value) &&
+    isText(value.id) &&
+    ['event', 'todo', 'caution', 'note'].includes(String(value.type)) &&
+    isText(value.title) &&
+    isText(value.body) &&
+    isText(value.authorLabel) &&
+    isText(value.createdAt) &&
+    isText(value.updatedAt) &&
+    isNullableText(value.deletedAt) &&
+    typeof value.pinned === 'boolean' &&
+    typeof value.confirmRequested === 'boolean' &&
+    isOptionalText(value.eventAt) &&
+    isOptionalText(value.dueAt)
+  )
 }
 
 function isMessage(value: unknown) {
-  return isRecord(value) && isText(value.id) && isText(value.body) &&
-    isText(value.authorLabel) && isText(value.createdAt) && isNullableText(value.deletedAt)
+  return (
+    isRecord(value) &&
+    isText(value.id) &&
+    isText(value.body) &&
+    isText(value.authorLabel) &&
+    isText(value.createdAt) &&
+    isNullableText(value.deletedAt)
+  )
 }
 
 function isConfirmation(value: unknown) {
-  return isRecord(value) && isText(value.id) &&
+  return (
+    isRecord(value) &&
+    isText(value.id) &&
     ['post', 'message'].includes(String(value.targetType)) &&
-    isText(value.targetId) && isText(value.confirmedAt)
+    isText(value.targetId) &&
+    isText(value.confirmedAt)
+  )
 }
 
 /** 복원 전에 데이터 형태를 확인해 현재 기록이 잘못된 파일로 바뀌는 일을 막는다. */
@@ -116,7 +151,8 @@ export async function createBackup(state: AppState, password: string): Promise<s
 }
 
 export async function readBackup(fileText: string, password: string): Promise<AppState> {
-  if (new TextEncoder().encode(fileText).byteLength > MAX_FILE_BYTES) throw new Error('백업 파일이 너무 큽니다.')
+  if (new TextEncoder().encode(fileText).byteLength > MAX_FILE_BYTES)
+    throw new Error('백업 파일이 너무 큽니다.')
   let file: unknown
   try {
     file = JSON.parse(fileText)
@@ -131,7 +167,8 @@ export async function readBackup(fileText: string, password: string): Promise<Ap
     typeof file.salt !== 'string' ||
     typeof file.iv !== 'string' ||
     typeof file.ciphertext !== 'string'
-  ) throw new Error('지원하지 않는 백업 파일입니다.')
+  )
+    throw new Error('지원하지 않는 백업 파일입니다.')
 
   try {
     const salt = decode(file.salt)

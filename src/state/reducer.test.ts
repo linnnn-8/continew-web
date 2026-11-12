@@ -62,3 +62,14 @@ describe('F-03-5 · 게시판 정렬', () => {
     expect(past.map((p) => p.id).sort()).toEqual(['post_5', 'post_6'])
   })
 })
+
+describe('기기 변경용 복원', () => {
+  it('백업 상태로 전체 기록을 교체하고 열린 공간은 닫는다', () => {
+    const current = makeSeed()
+    const restored = { ...makeSeed(), currentSpaceId: 'space_b', messages: [] }
+    const result = reducer(current, { type: 'RESTORE_BACKUP', state: restored })
+    expect(result.messages).toEqual([])
+    expect(result.currentSpaceId).toBeNull()
+    expect(result.memos).toEqual(restored.memos)
+  })
+})
