@@ -27,25 +27,23 @@ function AppRoutes() {
       </div>
     )
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Entry />} />
-        <Route element={<FrameLayout />}>
-          <Route path="/lock" element={<Lock />} />
-          <Route path="/spaces" element={<SpaceSelect />} />
-          <Route path="/spaces/manage" element={<SpaceManage />} />
-        </Route>
-        <Route element={<TabLayout />}>
-          <Route path="/home" element={<SpaceHome />} />
-          <Route path="/memo/:id" element={<MemoEditor />} />
-          <Route path="/share" element={<ShareConfirm />} />
-          <Route path="/board" element={<Board />} />
-          <Route path="/chat" element={<Chat />} />
-          <Route path="/summary" element={<SummaryResult />} />
-          <Route path="/settings" element={<Settings />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Entry />} />
+      <Route element={<FrameLayout />}>
+        <Route path="/lock" element={<Lock />} />
+        <Route path="/spaces" element={<SpaceSelect />} />
+        <Route path="/spaces/manage" element={<SpaceManage />} />
+      </Route>
+      <Route element={<TabLayout />}>
+        <Route path="/home" element={<SpaceHome />} />
+        <Route path="/memo/:id" element={<MemoEditor />} />
+        <Route path="/share" element={<ShareConfirm />} />
+        <Route path="/board" element={<Board />} />
+        <Route path="/chat" element={<Chat />} />
+        <Route path="/summary" element={<SummaryResult />} />
+        <Route path="/settings" element={<Settings />} />
+      </Route>
+    </Routes>
   )
 }
 
@@ -53,7 +51,9 @@ export default function App() {
   return (
     <LockProvider>
       <StoreProvider>
-        <AppRoutes />
+        <BrowserRouter>
+          <AppRoutes />
+        </BrowserRouter>
       </StoreProvider>
     </LockProvider>
   )

@@ -1,9 +1,13 @@
 import { useState, type FormEvent } from 'react'
+import { useLocation, useNavigate } from 'react-router-dom'
 import Logo from '../components/Logo'
 import { useLock } from '../security/LockProvider'
 
 /** 웹 시제품의 PIN 화면. 브라우저 저장 데이터 암호화나 생체인증은 제공하지 않는다. */
 export default function LockScreen() {
+  const navigate = useNavigate()
+  const location = useLocation()
+  const returnTo = location.state?.from === '/settings' ? '/settings' : '/spaces'
   const { status, hasPin, setPin, verify, skip, lock } = useLock()
   const [pin, updatePin] = useState('')
   const [again, updateAgain] = useState('')
@@ -18,8 +22,11 @@ export default function LockScreen() {
     if (setup && pin !== again) return setError('두 PIN이 서로 다릅니다.')
     setBusy(true)
     try {
-      if (setup) await setPin(pin)
-      else if (!(await verify(pin))) setError('PIN이 맞지 않습니다.')
+      if (setup) {
+        await setPin(pin)
+        navigate(returnTo, { replace: true })
+      } else if (!(await verify(pin))) setError('PIN이 맞지 않습니다.')
+      else if (location.pathname === '/lock') navigate(returnTo, { replace: true })
       updatePin('')
       updateAgain('')
     } catch {
@@ -86,7 +93,14 @@ export default function LockScreen() {
             </button>
           </form>
           {setup && (
-            <button className="link-btn" type="button" onClick={skip}>
+            <button
+              className="link-btn"
+              type="button"
+              onClick={() => {
+                skip()
+                navigate(returnTo, { replace: true })
+              }}
+            >
               나중에 설정하기
             </button>
           )}

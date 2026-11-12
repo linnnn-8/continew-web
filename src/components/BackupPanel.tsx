@@ -1,4 +1,5 @@
 import { useState, type ChangeEvent } from 'react'
+import { FileUp } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import { createBackup, readBackup } from '../security/backup'
 import { useLock } from '../security/LockProvider'
@@ -70,18 +71,22 @@ export default function BackupPanel() {
   async function restore() {
     if (!pending || confirmation !== '복원') return
     setBusy(true)
-    if (hasPin && !(await verify(currentPin))) {
-      setMessage('현재 앱 PIN이 맞지 않습니다.')
+    try {
+      if (hasPin && !(await verify(currentPin))) {
+        setMessage('현재 앱 PIN이 맞지 않습니다.')
+        return
+      }
+      dispatch({ type: 'RESTORE_BACKUP', state: pending })
+      setPending(null)
+      setConfirmation('')
+      setFile(null)
+      setCurrentPin('')
+      navigate('/spaces')
+    } catch {
+      setMessage('복원하지 못했습니다. 잠시 후 다시 시도해 주세요.')
+    } finally {
       setBusy(false)
-      return
     }
-    dispatch({ type: 'RESTORE_BACKUP', state: pending })
-    setPending(null)
-    setConfirmation('')
-    setFile(null)
-    setCurrentPin('')
-    setBusy(false)
-    navigate('/spaces')
   }
 
   return (
@@ -89,6 +94,9 @@ export default function BackupPanel() {
       <h2>기기 변경용 백업</h2>
       <p className="sub">
         기록은 이 기기에 저장됩니다. 새 기기로 옮기려면 암호화된 파일을 직접 보관하고 복원해 주세요.
+      </p>
+      <p className="backup-hint">
+        앱 PIN과 백업 비밀번호는 서로 달라요. 백업 비밀번호를 잊으면 파일을 열 수 없습니다.
       </p>
       {hasPin && (
         <>
@@ -110,6 +118,10 @@ export default function BackupPanel() {
 
       <div className="settings-group">
         <h3>백업 파일 만들기</h3>
+        <p className="backup-hint">
+          비밀번호를 정하고 저장하면 contiNEW 백업 파일(.json)이 다운로드돼요. 파일과 비밀번호를 각각 보관해
+          주세요.
+        </p>
         <label htmlFor="backup-password">백업 비밀번호 · 12자 이상</label>
         <input
           id="backup-password"
@@ -138,8 +150,23 @@ export default function BackupPanel() {
 
       <div className="settings-group">
         <h3>백업 파일 복원</h3>
-        <label htmlFor="backup-file">contiNEW 백업 파일</label>
-        <input id="backup-file" type="file" accept=".json,application/json" onChange={chooseFile} />
+        <p className="backup-hint">
+          새 기기에서 이전에 저장한 파일을 선택하고, 그때 정한 백업 비밀번호를 입력해 주세요.
+        </p>
+        <input
+          id="backup-file"
+          className="backup-file-input"
+          type="file"
+          accept=".json,application/json"
+          onChange={chooseFile}
+        />
+        <label className="backup-file-picker" htmlFor="backup-file">
+          <FileUp size={18} aria-hidden />
+          백업 파일 선택
+        </label>
+        <span className="backup-file-name" aria-live="polite">
+          {file?.name ?? '선택된 파일이 없어요'}
+        </span>
         <label htmlFor="restore-password">백업 비밀번호</label>
         <input
           id="restore-password"

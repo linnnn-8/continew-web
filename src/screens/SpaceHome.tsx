@@ -8,6 +8,17 @@ import { newItemCount } from '../state/selectors'
 import { useStore } from '../state/store'
 import { formatLongDate } from '../state/utils'
 
+const HOME_GREETINGS = [
+  '오늘도 편안하게',
+  '하나씩 천천히',
+  '차근차근 해봐요',
+  '배움을 응원해요',
+  '작은 걸음도 좋아요',
+  '숨을 고르고 시작해요',
+  '서두르지 않아도 돼요',
+  '이곳에서 천천히',
+] as const
+
 /** SCR-03 개인 공간 홈 */
 export default function SpaceHome() {
   const { state, currentSpace } = useStore()
@@ -23,8 +34,8 @@ export default function SpaceHome() {
       <div className="hero">
         <div>
           <p className="date">{formatLongDate()}</p>
-          <h1>{currentSpace.name} 공간이에요</h1>
-          <p className="sub">오늘 할 일과 다가오는 일정을 확인해요.</p>
+          <h1>{HOME_GREETINGS[currentSpace.sortOrder % HOME_GREETINGS.length]}</h1>
+          <p className="sub">오늘의 할 일과 일정을 살펴봐요.</p>
         </div>
         <Cloud />
       </div>

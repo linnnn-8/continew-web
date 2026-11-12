@@ -31,7 +31,7 @@ export default function SettingsScreen() {
             </button>
           </>
         ) : (
-          <Link className="btn btn-ghost wide settings-link" to="/lock">
+          <Link className="btn btn-ghost wide settings-link" to="/lock" state={{ from: '/settings' }}>
             PIN 설정하기
           </Link>
         )}
