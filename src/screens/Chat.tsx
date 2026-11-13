@@ -1,5 +1,5 @@
 import { Send } from 'lucide-react'
-import { useEffect, useState, type FormEvent } from 'react'
+import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { visibleSpaces } from '../state/selectors'
 import { useStore } from '../state/store'
@@ -7,6 +7,9 @@ import { ANONYMOUS_LABEL } from '../types/model'
 
 const time = (value: string) =>
   new Intl.DateTimeFormat('ko-KR', { hour: 'numeric', minute: '2-digit' }).format(new Date(value))
+
+const authorTone = (label: string) =>
+  Array.from(label).reduce((hash, char) => hash + char.codePointAt(0)!, 0) % 4
 
 /** 열린 공간을 기본 작성자로 보여 주고, 전송 전 다른 표기로 바꿀 수 있다. */
 export default function ChatScreen() {
@@ -18,6 +21,22 @@ export default function ChatScreen() {
   const [params] = useSearchParams()
   const focusMessage = params.get('message')
   const messages = state.messages.filter((message) => !message.deletedAt)
+  const listRef = useRef<HTMLUListElement>(null)
+  const scrollAfterSend = useRef(false)
+
+  useEffect(() => {
+    if (!scrollAfterSend.current) return
+    scrollAfterSend.current = false
+    const list = listRef.current
+    if (!list) return
+    const frame = requestAnimationFrame(() => {
+      list.scrollTo({
+        top: list.scrollHeight,
+        behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth',
+      })
+    })
+    return () => cancelAnimationFrame(frame)
+  }, [messages.length])
 
   useEffect(() => {
     if (!focusMessage) return
@@ -30,6 +49,7 @@ export default function ChatScreen() {
   function send(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
     if (!authorLabel || !body.trim()) return
+    scrollAfterSend.current = true
     dispatch({ type: 'SEND_MESSAGE', authorLabel, body: body.trim() })
     setBody('')
   }
@@ -41,10 +61,10 @@ export default function ChatScreen() {
         <p className="sub">공간을 넘어 자유롭게 이야기해요.</p>
       </div>
 
-      <ul className="chat-list" aria-label="공용 대화">
+      <ul className="chat-list" aria-label="공용 대화" ref={listRef}>
         {messages.map((message) => (
           <li
-            className={`chat-message${message.id === focusMessage ? ' is-target' : ''}`}
+            className={`chat-message chat-tone-${authorTone(message.authorLabel)}${message.id === focusMessage ? ' is-target' : ''}`}
             id={`message-${message.id}`}
             key={message.id}
           >

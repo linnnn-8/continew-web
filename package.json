@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host 127.0.0.1 --port 5176 --strictPort",
     "build": "tsc -b && vite build",
+    "build:pages": "tsc -b && VITE_USE_MOCK_SUMMARY=true vite build --mode pages && cp dist/index.html dist/404.html && touch dist/.nojekyll",
     "preview": "vite preview",
     "typecheck": "tsc -b --noEmit",
     "lint": "eslint .",

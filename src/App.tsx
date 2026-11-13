@@ -51,7 +51,7 @@ export default function App() {
   return (
     <LockProvider>
       <StoreProvider>
-        <BrowserRouter>
+        <BrowserRouter basename={import.meta.env.BASE_URL}>
           <AppRoutes />
         </BrowserRouter>
       </StoreProvider>

@@ -981,8 +981,17 @@
   white-space: pre-wrap;
   overflow-wrap: anywhere;
 }
-.chat-message:nth-child(even) .chat-bubble {
+.chat-tone-0 .chat-bubble {
   background: var(--primary-soft);
+}
+.chat-tone-1 .chat-bubble {
+  background: #f1f2f6;
+}
+.chat-tone-2 .chat-bubble {
+  background: #f4f0ec;
+}
+.chat-tone-3 .chat-bubble {
+  background: #eef4f1;
 }
 .chat-compose {
   flex: none;
