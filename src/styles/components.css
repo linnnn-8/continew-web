@@ -1,4 +1,20 @@
 /* ── 헤더·탭 ───────────────────────────────────── */
+.storage-warning {
+  position: fixed;
+  z-index: 100;
+  left: 50%;
+  bottom: 24px;
+  width: min(358px, calc(100% - 32px));
+  transform: translateX(-50%);
+  padding: 12px 14px;
+  border: 1px solid #e9a7b9;
+  border-radius: var(--radius-md);
+  background: #fff5f8;
+  color: #8c2445;
+  box-shadow: var(--shadow-pop);
+  font-size: 13px;
+  line-height: 1.5;
+}
 .app-header {
   display: flex;
   align-items: center;

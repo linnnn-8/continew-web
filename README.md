@@ -2,7 +2,7 @@
 
 > 개발 중인 웹 시제품입니다. 아직 구현되지 않은 화면이 있으며, 앱 안의 기록은 브라우저 localStorage에 암호화 없이 저장됩니다. 실제 민감한 기록을 입력하지 마세요. PIN은 화면 잠금만 제공하며 브라우저 저장 데이터 자체를 보호하지 않습니다.
 
-contiNEW 모바일 앱 프론트엔드 (React + TypeScript + Vite).
+contiNEW 모바일 화면 웹 시제품 (React + TypeScript + Vite). React Native 앱은 아닙니다.
 백엔드: [continew-server](https://github.com/kokohama8572/continew-server)
 기준 문서: 기능명세서 v0.2
 
@@ -12,6 +12,8 @@ contiNEW 모바일 앱 프론트엔드 (React + TypeScript + Vite).
 npm install
 npm run dev
 ```
+
+개발 미리보기 주소는 `http://127.0.0.1:5176`으로 고정합니다. 이미 이 포트를 사용 중이면 다른 포트로 자동 이동하지 않고 실행을 멈춥니다. 주소의 호스트명이나 포트가 달라지면 브라우저 저장 공간도 달라져 기존 기록이 보이지 않습니다.
 
 ## 폴더 구조
 
@@ -56,6 +58,7 @@ src/
 ## 연동 전 개발 방식
 
 백엔드 연동 전에는 `src/mocks/seed.ts`의 가상 데이터로 화면을 만들고, 상태는 `src/state/`의 reducer와 브라우저 localStorage에 저장합니다.
+메모·공간·게시글·대화·설정은 변경할 때마다 자동 저장되고, 같은 브라우저에서 같은 주소로 다시 열면 복원됩니다. 브라우저 데이터를 지우거나 비공개 창을 닫으면 기록이 사라질 수 있습니다. 저장된 데이터가 손상되어 읽히지 않으면 덮어쓰지 않고 경고를 표시합니다. 기기 변경은 설정의 암호화 백업·복원 기능을 사용합니다.
 개발 중 데이터를 되돌리려면 콘솔에서 `localStorage.removeItem('continew:v2')` 후 새로고침합니다.
 서버를 붙일 때는 `src/state/store.tsx`의 저장·불러오기 부분만 바꿉니다.
 
