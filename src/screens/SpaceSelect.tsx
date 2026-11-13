@@ -1,4 +1,4 @@
-import { ChevronRight, Info, Plus, SlidersHorizontal, Users } from 'lucide-react'
+import { ChevronRight, Info, Plus, SlidersHorizontal } from 'lucide-react'
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Cloud from '../components/Cloud'
@@ -74,10 +74,6 @@ export default function SpaceSelect() {
         <span>{COPY.spaceNotice}</span>
       </p>
 
-      <button className="btn btn-soft wide" onClick={() => nav('/board')}>
-        <Users size={18} aria-hidden />
-        공용 게시판으로 가기
-      </button>
     </main>
   )
 }

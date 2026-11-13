@@ -1,6 +1,7 @@
-import { Send } from 'lucide-react'
+import { Check, ChevronDown, Send } from 'lucide-react'
 import { useEffect, useRef, useState, type FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import Sheet from '../components/Sheet'
 import { visibleSpaces } from '../state/selectors'
 import { useStore } from '../state/store'
 import { ANONYMOUS_LABEL } from '../types/model'
@@ -18,6 +19,7 @@ export default function ChatScreen() {
   const spaceId = currentSpace?.id ?? null
   const authorLabel = authorChoice?.spaceId === spaceId ? authorChoice.label : (currentSpace?.name ?? '')
   const [body, setBody] = useState('')
+  const [authorOpen, setAuthorOpen] = useState(false)
   const [params] = useSearchParams()
   const focusMessage = params.get('message')
   const messages = state.messages.filter((message) => !message.deletedAt)
@@ -83,22 +85,13 @@ export default function ChatScreen() {
       </ul>
 
       <form className="chat-compose" onSubmit={send}>
-        <label className="chat-author-label" htmlFor="chat-author">
-          작성자 표기
-        </label>
-        <select
-          id="chat-author"
-          value={authorLabel}
-          onChange={(event) => setAuthorChoice({ spaceId, label: event.target.value })}
-        >
-          <option value="">직접 선택해 주세요</option>
-          {visibleSpaces(state).map((space) => (
-            <option key={space.id} value={space.name}>
-              {space.name}
-            </option>
-          ))}
-          <option value={ANONYMOUS_LABEL}>{ANONYMOUS_LABEL}</option>
-        </select>
+        <div className="chat-author-row">
+          <span className="chat-author-label">작성자</span>
+          <button type="button" className="chat-author-button" onClick={() => setAuthorOpen(true)}>
+            <span>{authorLabel || '선택해 주세요'}</span>
+            <ChevronDown size={15} aria-hidden />
+          </button>
+        </div>
         <div className="chat-input-row">
           <input
             aria-label="메시지"
@@ -112,6 +105,25 @@ export default function ChatScreen() {
           </button>
         </div>
       </form>
+      <Sheet open={authorOpen} onClose={() => setAuthorOpen(false)} title="작성자 표기">
+        <p className="sheet-note">이 메시지에 표시할 이름을 선택해 주세요.</p>
+        <ul className="switch-list">
+          {[...visibleSpaces(state).map((space) => space.name), ANONYMOUS_LABEL].map((label) => (
+            <li key={label}>
+              <button
+                className="switch-item"
+                onClick={() => {
+                  setAuthorChoice({ spaceId, label })
+                  setAuthorOpen(false)
+                }}
+              >
+                <span className="switch-name">{label}</span>
+                {label === authorLabel && <Check size={18} aria-label="선택됨" />}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </Sheet>
     </div>
   )
 }

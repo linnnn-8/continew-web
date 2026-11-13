@@ -1,5 +1,5 @@
 import { Home, MessageCircle, PanelsTopLeft, Settings } from 'lucide-react'
-import { NavLink, Outlet } from 'react-router-dom'
+import { Link, NavLink, Outlet } from 'react-router-dom'
 import Logo from './Logo'
 import SpacePill from './SpacePill'
 
@@ -24,7 +24,9 @@ export function TabLayout() {
   return (
     <div className="frame">
       <header className="app-header">
-        <Logo />
+        <Link to="/home" className="logo-link" aria-label="내 공간 홈으로">
+          <Logo />
+        </Link>
         <SpacePill />
       </header>
       <main className="scroll">
