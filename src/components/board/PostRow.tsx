@@ -1,5 +1,5 @@
 import { Check, ChevronDown, Clock, Pin, StickyNote } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { DateTile } from '../common'
 import { useStore } from '../../state/store'
 import { formatShortDate, formatTime } from '../../state/utils'
@@ -11,6 +11,7 @@ interface Props {
   mine: string[]
   setMine: (fn: (prev: string[]) => string[]) => void
   muted?: boolean
+  focused?: boolean
 }
 
 function Sub({ post }: { post: BoardPost }) {
@@ -30,9 +31,12 @@ function Sub({ post }: { post: BoardPost }) {
 }
 
 /** 공유 게시물 한 줄. 일정·할 일·주의사항·메모(F-03-4)를 같은 모양으로 보여준다 */
-export default function PostRow({ post, mine, setMine, muted }: Props) {
+export default function PostRow({ post, mine, setMine, muted, focused = false }: Props) {
   const { dispatch } = useStore()
   const [open, setOpen] = useState(false)
+  useEffect(() => {
+    if (focused) setOpen(true)
+  }, [focused])
   const done = !!post.doneAt
 
   let leading
@@ -57,7 +61,7 @@ export default function PostRow({ post, mine, setMine, muted }: Props) {
     )
 
   return (
-    <li className={`post${muted ? ' muted' : ''}`}>
+    <li id={`post-${post.id}`} className={`post${muted ? ' muted' : ''}${focused ? ' is-target' : ''}`}>
       <div className="post-main">
         {leading}
         <button className="post-body" aria-expanded={open} onClick={() => setOpen((o) => !o)}>

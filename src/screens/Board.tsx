@@ -25,6 +25,7 @@ export default function Board() {
   const nav = useNavigate()
   const [sp, setSp] = useSearchParams()
   const filter = (FILTERS.find((f) => f.id === sp.get('filter'))?.id ?? 'all') as Filter
+  const focusPost = sp.get('post')
   const [showPast, setShowPast] = useState(false)
   const [mine, setMine] = useState<string[]>([])
   const spaceId = currentSpace?.id ?? null
@@ -45,11 +46,24 @@ export default function Board() {
   const todos = pick('todo')
   const notes = pick('note')
   const pastShown = past.filter(match)
+  const focusIsPast = !!focusPost && past.some((post) => post.id === focusPost)
   const empty = !cautions.length && !events.length && !todos.length && !notes.length
+
+  useEffect(() => {
+    if (!focusPost) return
+    if (focusIsPast && !showPast) {
+      setShowPast(true)
+      return
+    }
+    const frame = requestAnimationFrame(() =>
+      document.getElementById(`post-${focusPost}`)?.scrollIntoView({ block: 'center' }),
+    )
+    return () => cancelAnimationFrame(frame)
+  }, [focusPost, focusIsPast, showPast])
 
   const section = (title: string, list: BoardPost[], target: Filter, cls = '') => {
     if (!list.length) return null
-    const shown = filter === 'all' ? list.slice(0, PREVIEW) : list
+    const shown = filter === 'all' && !focusPost ? list.slice(0, PREVIEW) : list
     return (
       <Card className={`sec ${cls}`}>
         <div className="sec-head">
@@ -63,7 +77,7 @@ export default function Board() {
         </div>
         <ul className="post-list">
           {shown.map((p) => (
-            <PostRow key={p.id} post={p} mine={mine} setMine={setMine} />
+            <PostRow key={p.id} post={p} mine={mine} setMine={setMine} focused={p.id === focusPost} />
           ))}
         </ul>
       </Card>
@@ -127,7 +141,14 @@ export default function Board() {
           {showPast && (
             <ul className="post-list">
               {pastShown.map((p) => (
-                <PostRow key={p.id} post={p} mine={mine} setMine={setMine} muted />
+                <PostRow
+                  key={p.id}
+                  post={p}
+                  mine={mine}
+                  setMine={setMine}
+                  muted
+                  focused={p.id === focusPost}
+                />
               ))}
             </ul>
           )}

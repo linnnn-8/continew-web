@@ -1301,3 +1301,92 @@
   margin-top: 3px;
   accent-color: var(--primary);
 }
+
+/* ── 공용 내용 요약 ────────────────────────────── */
+.page-summary {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 18px;
+}
+.page-summary h1 {
+  margin-top: 20px;
+  font-size: 23px;
+  letter-spacing: -0.03em;
+}
+.page-summary .form-label {
+  margin-top: 24px;
+}
+.page-summary > .btn {
+  margin-top: 14px;
+}
+.summary-results {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+}
+.summary-results::-webkit-scrollbar {
+  display: none;
+}
+.summary-status,
+.summary-results > .notice {
+  margin-top: 18px;
+}
+.summary-status {
+  color: var(--text-sub);
+  font-size: 14px;
+}
+.summary-status .link-btn {
+  margin: 8px 0 0;
+}
+.summary-section {
+  margin-top: 26px;
+}
+.summary-section h2 {
+  margin-bottom: 8px;
+  font-size: 17px;
+  font-weight: 600;
+}
+.summary-section li {
+  padding: 12px 0;
+  border-top: 1px solid var(--line);
+}
+.summary-section li p {
+  color: var(--text);
+  font-size: 15px;
+}
+.summary-section li small {
+  display: block;
+  margin-top: 4px;
+  color: var(--text-sub);
+  font-size: 12px;
+}
+.summary-sources {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 7px;
+}
+.summary-source {
+  color: var(--primary-strong);
+  font-size: 12px;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.summary-disclaimer {
+  flex: none;
+  padding: 12px 0 4px;
+  background: #fff;
+  color: var(--text-sub);
+  font-size: 12px;
+  line-height: 1.5;
+}
+.post.is-target,
+.chat-message.is-target {
+  border-radius: var(--radius-sm);
+  background: var(--primary-softer);
+}

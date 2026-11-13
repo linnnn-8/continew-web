@@ -83,7 +83,7 @@ src/
 | `format.ts`       | 날짜·원문 병기 문구, 원문 id → 종류                                                      |
 
 **서버 없이 개발:** `.env.example`을 `.env.local`로 복사하면 `VITE_USE_MOCK_SUMMARY=true`로 가짜 응답이 나옵니다.
-**서버 붙이기:** 값을 `false`로 바꾸고 continew-server를 띄우면 vite가 `/api`를 `localhost:8080`으로 넘겨 CORS를 피합니다. 배포나 폰 테스트처럼 다른 주소에서 열 땐 서버 담당에게 허용 주소를 요청해야 합니다.
+**로컬 서버 붙이기:** `../continew-server`의 `main` 브랜치에서 `./gradlew bootRun`을 실행하고 프론트에서 `npm run dev`를 실행합니다. `.env.local`이 없거나 `VITE_USE_MOCK_SUMMARY=false`이면 Vite가 `/api` 요청을 `localhost:8080`으로 전달합니다. 배포 없이 같은 컴퓨터에서 연동할 수 있습니다. 다른 주소나 실제 폰에서 열 때는 서버 주소·CORS·접속 경로를 별도로 설정해야 합니다.
 
 AI 요약 설정이 꺼져 있으면 `useSummary().run`은 아무것도 하지 않습니다. 설정을 끄면 캐시가 즉시 지워집니다.
 
@@ -98,7 +98,7 @@ AI 요약 설정이 꺼져 있으면 `useSummary().run`은 아무것도 하지 �
 | SCR-05 공유 확인 (`screens/ShareConfirm.tsx`)                                 | 게시글·일정·할 일·주의사항 작성 구현                                      |
 | SCR-06 공용 영역 (`screens/Board.tsx`, `components/board/`)                   | 구현. 필터·확인했어요·AI 요약 진입 포함                                   |
 | SCR-07 대화 (`screens/Chat.tsx`)                                              | 목록·열린 공간 작성자 기본 선택·전송 구현. 답장·검색·게시판 공유는 미구현 |
-| SCR-08 AI 요약 결과 (`screens/SummaryResult.tsx`)                             | TODO 화면만 있음. 결과 표시·원문 보기가 미구현                            |
+| SCR-08 AI 요약 결과 (`screens/SummaryResult.tsx`)                             | 로컬 서버 요청·4개 묶음·원문 이동 구현. 정식 동의 화면은 미구현           |
 | SCR-09 설정 (`screens/Settings.tsx`)                                          | PIN 잠금 간격과 암호화 백업·복원 구현. 그 외 설정은 미구현                |
 
 ## 기기 변경용 백업·복원
@@ -108,4 +108,6 @@ AI 요약 설정이 꺼져 있으면 `useSummary().run`은 아무것도 하지 �
 현재 백엔드 API는 요약 기능만 담당하므로 이 백업 기능에는 서버 변경이 필요하지 않습니다. 기능 명세서의 전체 백업·복원(F-09-2·3)을 P1에서 MVP로 앞당긴 결정은 팀 문서에도 반영해야 합니다. **복원 뒤 앱 안의 기록은 다시 암호화되지 않은 localStorage에 저장됩니다.** 실제 사용자 기록을 다루기 전 기기 내 저장소 암호화와 보안 검토가 필요합니다.
 
 개발 중에는 공용 영역 맨 아래 "개발용" 박스로 AI 요약 켜짐/꺼짐을 바꿀 수 있습니다(설정 화면의 동의 절차가 생기면 삭제).
+백엔드 기본 생성기는 외부 AI를 호출하지 않는 `structured` 모드입니다. 로컬 연결 확인은 이 모드로 할 수 있으며, 실제 AI 호출은 서버의 별도 환경 변수와 동의 흐름을 준비한 뒤 검증해야 합니다.
+백엔드에는 사용자 기록 저장용 DB·인증 API가 없습니다. 메모·공간·게시글·대화는 현재 프론트의 기기 저장소에만 남습니다.
 폰트는 Pretendard(`pretendard` 패키지), 아이콘은 `lucide-react`입니다.

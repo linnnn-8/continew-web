@@ -1,5 +1,6 @@
 import { Send } from 'lucide-react'
-import { useState, type FormEvent } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { visibleSpaces } from '../state/selectors'
 import { useStore } from '../state/store'
 import { ANONYMOUS_LABEL } from '../types/model'
@@ -14,7 +15,17 @@ export default function ChatScreen() {
   const spaceId = currentSpace?.id ?? null
   const authorLabel = authorChoice?.spaceId === spaceId ? authorChoice.label : (currentSpace?.name ?? '')
   const [body, setBody] = useState('')
+  const [params] = useSearchParams()
+  const focusMessage = params.get('message')
   const messages = state.messages.filter((message) => !message.deletedAt)
+
+  useEffect(() => {
+    if (!focusMessage) return
+    const frame = requestAnimationFrame(() =>
+      document.getElementById(`message-${focusMessage}`)?.scrollIntoView({ block: 'center' }),
+    )
+    return () => cancelAnimationFrame(frame)
+  }, [focusMessage])
 
   function send(event: FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -32,7 +43,11 @@ export default function ChatScreen() {
 
       <ul className="chat-list" aria-label="공용 대화">
         {messages.map((message) => (
-          <li className="chat-message" key={message.id}>
+          <li
+            className={`chat-message${message.id === focusMessage ? ' is-target' : ''}`}
+            id={`message-${message.id}`}
+            key={message.id}
+          >
             <span className="chat-avatar" aria-hidden>
               {message.authorLabel.slice(0, 1)}
             </span>
