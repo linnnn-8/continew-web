@@ -7,10 +7,12 @@ import { ANONYMOUS_LABEL } from '../types/model'
 const time = (value: string) =>
   new Intl.DateTimeFormat('ko-KR', { hour: 'numeric', minute: '2-digit' }).format(new Date(value))
 
-/** 작성자 표기를 직접 고른 뒤 공용 대화에 메시지를 남긴다. */
+/** 열린 공간을 기본 작성자로 보여 주고, 전송 전 다른 표기로 바꿀 수 있다. */
 export default function ChatScreen() {
-  const { state, dispatch } = useStore()
-  const [authorLabel, setAuthorLabel] = useState('')
+  const { state, dispatch, currentSpace } = useStore()
+  const [authorChoice, setAuthorChoice] = useState<{ spaceId: string | null; label: string } | null>(null)
+  const spaceId = currentSpace?.id ?? null
+  const authorLabel = authorChoice?.spaceId === spaceId ? authorChoice.label : (currentSpace?.name ?? '')
   const [body, setBody] = useState('')
   const messages = state.messages.filter((message) => !message.deletedAt)
 
@@ -49,7 +51,11 @@ export default function ChatScreen() {
         <label className="chat-author-label" htmlFor="chat-author">
           작성자 표기
         </label>
-        <select id="chat-author" value={authorLabel} onChange={(event) => setAuthorLabel(event.target.value)}>
+        <select
+          id="chat-author"
+          value={authorLabel}
+          onChange={(event) => setAuthorChoice({ spaceId, label: event.target.value })}
+        >
           <option value="">직접 선택해 주세요</option>
           {visibleSpaces(state).map((space) => (
             <option key={space.id} value={space.name}>
