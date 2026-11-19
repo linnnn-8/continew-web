@@ -58,5 +58,6 @@ export async function mockSummarize(req: SummaryRequest, signal?: AbortSignal): 
         source_ids: [i.id],
       })),
     needs_original: [],
+    summary_text: null,
   }
 }

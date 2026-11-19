@@ -105,6 +105,21 @@ export default function SummaryResultScreen() {
         ]
       : []
 
+  const prose = phase.kind === 'done' ? phase.result.summary_text?.trim() || null : null
+  // 줄글 아래에 보여 줄 원문 목록: 항목들이 근거로 삼은 글을 중복 없이 모은다.
+  const proseSourceIds = phase.kind === 'done' && prose
+    ? [
+        ...new Set(
+          [
+            ...phase.result.events,
+            ...phase.result.todos,
+            ...phase.result.cautions,
+            ...phase.result.conversation,
+          ].flatMap((item) => item.source_ids),
+        ),
+      ]
+    : []
+
   const unresolvedIds = phase.kind === 'done' ? phase.result.needs_original : []
   const showOriginals =
     phase.kind === 'originals'
@@ -171,7 +186,33 @@ export default function SummaryResultScreen() {
           </p>
         )}
 
+        {prose && (
+          <section className="summary-section summary-prose">
+            <h2>요약</h2>
+            <p className="summary-prose-text">{prose}</p>
+            {proseSourceIds.length > 0 && (
+              <>
+                <h3>근거가 된 원문</h3>
+                <ul>
+                  {proseSourceIds.map((id) => {
+                    const post = state.posts.find((item) => item.id === id && !item.deletedAt)
+                    const message = state.messages.find((item) => item.id === id && !item.deletedAt)
+                    if (!post && !message) return null
+                    return (
+                      <li key={id}>
+                        <p>{post?.title ?? message?.body}</p>
+                        <div className="summary-sources">{sources([id])}</div>
+                      </li>
+                    )
+                  })}
+                </ul>
+              </>
+            )}
+          </section>
+        )}
+
         {groups
+          .filter(() => !prose)
           .filter((group) => group.rows.length > 0)
           .map((group) => (
             <section className="summary-section" key={group.title}>

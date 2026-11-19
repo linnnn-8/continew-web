@@ -33,6 +33,8 @@ export interface SummaryResponse {
   cautions: { text: string; source_ids: string[] }[]
   conversation: { text: string; author_labels: string[]; source_ids: string[] }[]
   needs_original: string[]
+  /** 항목을 이어 쓴 줄글. 없거나 null이면 항목별 화면으로 보여 준다. */
+  summary_text?: string | null
 }
 
 export type SummaryErrorCode =
